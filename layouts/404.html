@@ -1,0 +1,33 @@
+{{- /* Sobrescribe el 404 del tema. GitHub Pages lo sirve en cualquier ruta
+       que no exista, así que todos los enlaces van con ruta absoluta. */ -}}
+{{- define "main" }}
+<div class="e404">
+    <p class="e404-codigo">404</p>
+    <h1 class="e404-titulo">No existe el fichero o el directorio</h1>
+    <p class="e404-frase" id="e404-frase">Probablemente sea culpa del DNS. Siempre es el DNS.</p>
+
+    <div class="buttons e404-botones">
+        <a class="button" href="{{ "/" | relLangURL }}"><span class="button-inner">Volver al inicio</span></a>
+        <a class="button" href="{{ "/blog/" | relLangURL }}"><span class="button-inner">Ir al blog</span></a>
+        <a class="button" href="{{ "/buscar/" | relLangURL }}"><span class="button-inner">Buscar</span></a>
+    </div>
+</div>
+
+<script>
+    (function () {
+        // Hugo pone «404 Page not found» como título de la pestaña.
+        document.title = "Página no encontrada | {{ site.Title }}";
+
+        // Una frase al azar en cada visita (sin JS, se queda la primera).
+        var frases = [
+            "Probablemente sea culpa del DNS. Siempre es el DNS.",
+            "Al menos lo que ha dejado de funcionar no es la impresora.",
+            "Esta vez la culpa no es de un rm -rf /.",
+            "En mi máquina funcionaba.",
+            "Al menos no es un error 500."
+        ];
+        document.getElementById("e404-frase").textContent =
+            frases[Math.floor(Math.random() * frases.length)];
+    })();
+</script>
+{{- end }}{{/* end main */ -}}

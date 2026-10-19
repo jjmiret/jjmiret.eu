@@ -1,0 +1,302 @@
+/* ------------------------------------------------------------------
+   custom.css — se carga DESPUÉS del CSS de PaperMod, así que gana.
+   Nunca edites nada dentro de themes/PaperMod/.
+
+   Los nombres de variable salen de:
+     themes/PaperMod/assets/css/core/theme-vars.css
+   Si al actualizar el tema algo deja de aplicarse, compara con ese fichero.
+   ------------------------------------------------------------------ */
+
+/* ---- Tipografía ---- */
+/* Las @font-face están en layouts/partials/extend_head.html,
+   junto a los ficheros de static/fonts/. */
+
+:root {
+  --acento: #345C8C;
+}
+
+/* ---- Tema claro ---- */
+:root {
+  --theme: #ffffff;        /* fondo de página */
+  --entry: #ffffff;        /* fondo de tarjetas y entradas */
+  --primary: #1a1a1a;      /* texto principal */
+  --secondary: #6b6b6b;    /* texto secundario, metadatos */
+  --tertiary: #ededed;     /* fondos sutiles, separadores */
+  --content: #1f1f1f;      /* cuerpo del artículo */
+  --border: #e0e0e0;
+  --code-bg: #f6f6f6;
+  --hljs-bg: #f6f6f6;
+}
+
+/* ---- Tema oscuro ----
+   El acento se aclara a propósito: #345C8C sobre fondo oscuro
+   no llega al contraste mínimo de WCAG AA. */
+:root[data-theme="dark"] {
+  --acento: #6B93C4;
+  --theme: #121212;
+  --entry: #1a1a1a;
+  --primary: #e8e8e8;
+  --secondary: #9a9a9a;
+  --tertiary: #2a2a2a;
+  --content: #dcdcdc;
+  --border: #2e2e2e;
+  --code-bg: #1e1e1e;
+  --hljs-bg: #1e1e1e;
+}
+
+/* ---- Familias tipográficas ---- */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+}
+
+h1, h2, h3, h4,
+.logo a,
+.profile_inner h1,
+.post-title,
+.entry-header h2 {
+  font-family: 'Schibsted Grotesk', -apple-system, system-ui, sans-serif;
+  letter-spacing: -0.01em;
+}
+
+/* ---- Acento ---- */
+a {
+  color: var(--acento);
+}
+
+.post-content a {
+  box-shadow: 0 1px 0 var(--acento);
+}
+
+.profile .buttons .button,
+.post-tags a {
+  border-color: var(--border);
+}
+
+.profile .buttons .button:hover,
+.post-tags a:hover {
+  border-color: var(--acento);
+  color: var(--acento);
+}
+
+/* ---- Efecto al pasar el ratón / foco por teclado ---- */
+.profile .buttons .button,
+.social-icons a,
+#menu a {
+  transition: color .15s ease, background-color .15s ease,
+              border-color .15s ease, transform .15s ease;
+}
+
+.profile .buttons .button:hover,
+.profile .buttons .button:focus-visible {
+  background: var(--acento);
+  border-color: var(--acento);
+  color: var(--theme);
+  transform: translateY(-2px);
+}
+
+.social-icons a {
+  color: var(--acento);
+}
+
+.social-icons a:hover,
+.social-icons a:focus-visible {
+  color: var(--primary);
+  transform: translateY(-2px);
+}
+
+/* ---- Cabecera ---- */
+.header {
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 1rem;
+}
+
+.logo a {
+  color: var(--primary);
+  font-weight: 700;
+  transition: color .15s ease;
+}
+
+.logo a:hover,
+.logo a:focus-visible {
+  color: var(--acento);
+}
+
+#menu a {
+  color: var(--secondary);
+}
+
+#menu a:hover,
+#menu a:focus-visible,
+#menu .active {
+  color: var(--acento);
+}
+
+#menu a:hover span,
+#menu a:focus-visible span,
+#menu .active {
+  border-bottom: 2px solid var(--acento);
+}
+
+/* ---- Ajustes de lectura ---- */
+.post-content {
+  line-height: 1.7;
+}
+
+.post-content blockquote {
+  border-inline-start-color: var(--acento);
+}
+
+/* Bloques de código: que respiren un poco más */
+.post-content pre {
+  padding: 1rem;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+}
+
+/* ---- Iconos sociales dentro de una página ---- */
+.post-content .social-icons {
+  justify-content: flex-start;
+  margin: 1rem 0;
+}
+
+.post-content .social-icons a {
+  box-shadow: none;
+}
+
+/* ---- Últimas entradas en la portada ---- */
+.ultimas {
+  max-width: 34rem;
+  margin: 2.5rem auto 0;
+  padding: 0 var(--gap);
+}
+
+.ultimas h2 {
+  font-size: 1rem;
+  color: var(--secondary);
+  text-transform: uppercase;
+  letter-spacing: .08em;
+  margin-bottom: .5rem;
+}
+
+.ultimas ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ultimas li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: .6rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ultimas time {
+  color: var(--secondary);
+  font-size: .85rem;
+  white-space: nowrap;
+}
+
+.ultimas .ver-todas {
+  display: inline-block;
+  margin-top: .8rem;
+  font-size: .9rem;
+}
+
+/* ---- Portada más compacta ----
+   El tema centra el perfil a pantalla completa; aquí se pega arriba. */
+.main .profile {
+  min-height: 0;
+  padding-top: 2.5rem;
+}
+
+.profile .profile_inner {
+  gap: 1rem;
+}
+
+.profile .social-icons {
+  margin-block: 0;
+}
+
+.ultimas {
+  margin-top: 3.5rem;
+}
+
+/* ---- Página 404 ---- */
+.e404 {
+  max-width: 34rem;
+  margin: 2.5rem auto 0;
+  text-align: center;
+}
+
+.e404-codigo {
+  margin: 0;
+  font-family: 'Schibsted Grotesk', -apple-system, system-ui, sans-serif;
+  font-size: clamp(5rem, 22vw, 9rem);
+  font-weight: 800;
+  line-height: 1;
+  color: var(--acento);
+  letter-spacing: -0.04em;
+}
+
+.e404-titulo {
+  margin: .5rem 0 .75rem;
+  font-size: 1.3rem;
+  color: var(--primary);
+}
+
+.e404-frase {
+  margin: 0 0 2rem;
+  color: var(--secondary);
+  font-style: italic;
+}
+
+.e404-botones {
+  margin: 0 auto;
+}
+
+/* ---- Currículum: varios puestos en la misma empresa ---- */
+.cv-empresa-nombre {
+  margin-bottom: .6rem;
+}
+
+.cv-puestos {
+  margin-inline-start: .35rem;
+  padding-inline-start: 1.2rem;
+  border-inline-start: 2px solid var(--border);
+}
+
+.cv-puestos > p {
+  position: relative;
+}
+
+/* Un punto azul en la línea por cada puesto */
+.cv-puestos > p::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: calc(-1.2rem - 6px);
+  top: .55em;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--acento);
+  box-shadow: 0 0 0 3px var(--theme);
+}
+
+.cv-puestos > p:last-child {
+  margin-bottom: 0;
+}
+
+.cv-empresa {
+  margin-bottom: 1.5rem;
+}
+
+.cv-empresa-detalle {
+  color: var(--secondary);
+}
+
+/* Las tareas de cada puesto, pegadas a su cabecera */
+.cv-puestos > p + ul {
+  margin-top: -.6rem;
+}

@@ -1,0 +1,35 @@
+{{- /* Pinta una lista de iconos sociales (se le pasa la lista como contexto).
+       Incluye los iconos propios que PaperMod no trae. */}}
+<div class="social-icons">
+    {{- range . }}
+    {{- $n := trim .name " " | lower }}
+    <a href="{{ trim .url " " | safeURL }}" target="_blank" rel="noopener noreferrer me"
+        title="{{ (.title | default .name) | title }}" aria-label="{{ (.title | default .name) | title }}">
+        {{- if (eq $n "nintendo-switch") -}}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 3H6a3 3 0 0 0-3 3v12a3 3 0 0 0 3 3h3z" />
+            <path d="M15 21h3a3 3 0 0 0 3-3V6a3 3 0 0 0-3-3h-3z" />
+            <circle cx="6.5" cy="9" r="1.2" fill="currentColor" />
+            <circle cx="17.5" cy="15" r="1.2" fill="currentColor" />
+        </svg>
+        {{- else if (eq $n "trakt") -}}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="7" width="20" height="14" rx="2" />
+            <polyline points="17 2 12 7 7 2" />
+        </svg>
+        {{- else if (eq $n "amazon-music") -}}
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 17V6l9-2v11" />
+            <circle cx="6.5" cy="17" r="2.5" />
+            <circle cx="15.5" cy="15" r="2.5" />
+            <path d="M4 21.5c4 1.5 9 1.5 14-.5" />
+        </svg>
+        {{- else -}}
+        {{ partial "svg.html" . }}
+        {{- end }}
+    </a>
+    {{- end }}
+</div>

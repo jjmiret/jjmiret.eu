@@ -1,0 +1,12 @@
+{{- /* extend_footer.html — PaperMod lo incluye al final del pie.
+       Traduce el botón de volver arriba, que el tema trae fijo en inglés.
+       Se hace aquí para no copiar todo footer.html del tema. */ -}}
+<script>
+    (function () {
+        var t = document.getElementById("top-link");
+        if (t) {
+            t.title = "Volver arriba (Alt + G)";
+            t.setAttribute("aria-label", "volver arriba");
+        }
+    })();
+</script>

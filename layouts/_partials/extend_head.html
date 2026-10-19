@@ -1,0 +1,53 @@
+{{/*
+  extend_head.html — PaperMod inyecta este parcial dentro del <head>.
+  No existe en el tema: es un punto de extensión pensado para esto,
+  así que nada de lo que pongas aquí se pierde al actualizar PaperMod.
+*/}}
+
+{{/* ---- Política de seguridad de contenido (CSP) ----
+     GitHub Pages no deja configurar cabeceras HTTP, así que va como <meta>.
+     Solo se cargan recursos de este mismo dominio: si algún día una nota
+     quiere una imagen, vídeo o script externo, hay que añadir su dominio aquí
+     (o, mejor, descargarlo a static/).
+     'unsafe-inline' es necesario porque PaperMod usa scripts y estilos inline;
+     aun así, cualquier script inyectado no podría cargar código de fuera ni
+     enviar datos a otro dominio.
+     Solo en producción: con `hugo server` no se aplica, para no romper
+     la recarga en vivo. */}}
+{{- if hugo.IsProduction }}
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; media-src 'self'; manifest-src 'self'; base-uri 'self'; form-action 'none'">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+{{- end }}
+
+{{/* ---- Fuentes servidas desde tu propio dominio, sin CDN ----
+     Versiones variables, subconjunto latino, de Fontsource 5.3.0
+     (@fontsource-variable/inter y @fontsource-variable/schibsted-grotesk).
+     Licencia SIL OFL 1.1: los OFL-*.txt van junto a las fuentes. */}}
+<style>
+@font-face {
+  font-family: 'Schibsted Grotesk';
+  src: url('/fonts/SchibstedGrotesk.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Inter';
+  src: url('/fonts/Inter.woff2') format('woff2');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+</style>
+
+{{/* ---- Verificación del dominio en el fediverso ----
+     Esto es lo que pone el tic verde en Mastodon y Pixelfed: el perfil
+     enlaza a esta web y esta web enlaza al perfil con rel="me".
+     Usa exactamente la misma URL que en hugo.toml. */}}
+<link rel="me" href="https://masto.es/@jjmiret">
+<link rel="me" href="https://pixelfed.social/jjmiret">
+
+{{/* ---- Feed RSS detectable por los lectores ---- */}}
+{{ with .OutputFormats.Get "rss" }}
+  <link rel="alternate" type="application/rss+xml" href="{{ .Permalink }}" title="{{ $.Site.Title }}">
+{{ end }}

@@ -1,0 +1,23 @@
+{{- /* Agrupa varios puestos en la misma empresa, con una línea de tiempo.
+       Uso:
+         {{< empresa nombre="UNICC" completo="Nombre largo (opcional)" detalle="2019 – actualidad · Ciudad, País" >}}
+         **Puesto**\
+         2023 – actualidad
+
+         - Tarea
+         - Tarea
+         {{< /empresa >}}
+       Cada puesto empieza con un párrafo (cargo y, tras el salto, las fechas),
+       que lleva el punto de la línea de tiempo, y puede seguir con una lista.
+       La línea de fechas se pone en gris sola: no uses {{< gris >}} aquí dentro,
+       porque el markdown de dentro no admite HTML. */ -}}
+{{- $puestos := .Inner | .Page.RenderString (dict "display" "block") }}
+{{- $puestos = replaceRE `<br>\s*([^<]+)</p>` `<br><span class="cv-empresa-detalle">$1</span></p>` $puestos }}
+<div class="cv-empresa">
+    <p class="cv-empresa-nombre"><strong>{{ .Get "nombre" }}</strong>
+        {{- with .Get "completo" }} · {{ . }}{{ end }}
+        {{- with .Get "detalle" }}<br><span class="cv-empresa-detalle">{{ . }}</span>{{ end }}</p>
+    <div class="cv-puestos">
+        {{ $puestos | safeHTML }}
+    </div>
+</div>

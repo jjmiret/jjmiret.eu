@@ -1,0 +1,172 @@
+baseURL = 'https://jjmiret.eu/'
+defaultContentLanguage = 'es'   # idioma del sitio: textos del tema, <html lang>, fechas
+locale = 'es'              # en Hugo < 0.158 esta clave se llamaba languageCode
+title = 'jjmiret.eu'
+theme = 'PaperMod'
+
+# Necesario para que PaperMod genere las meta de Open Graph / Twitter.
+enableRobotsTXT = true
+
+# ---------------------------------------------------------------
+# Seguridad del build
+# ---------------------------------------------------------------
+# El build no necesita descargar nada de internet ni ejecutar programas
+# externos: se bloquea todo para que ni el tema ni el contenido puedan hacerlo.
+[security]
+  [security.exec]
+    allow = ['none']
+  [security.http]
+    urls = ['none']
+
+[taxonomies]
+  tag = 'tags'
+
+[markup.highlight]
+  noClasses = false      # usa tu CSS para el coloreado, no colores fijos
+  codeFences = true
+  guessSyntax = true
+
+[outputs]
+  home = ["HTML", "RSS", "JSON"]   # JSON deja el buscador listo para más adelante
+
+# ---------------------------------------------------------------
+# Parámetros del tema
+# ---------------------------------------------------------------
+[params]
+  env = "production"
+  description = "Ciberseguridad, proyectos personales y homelab."
+  author = "José Juan Miret Conejero"
+
+  defaultTheme = "dark"          # siempre oscuro
+  disableThemeToggle = true      # sin botón para cambiar de tema
+  ShowCodeCopyButtons = true
+  ShowBreadCrumbs = true
+  ShowPostNavLinks = true
+  ShowToc = true
+  TocOpen = false
+  ShowReadingTime = false
+  ShowWordCount = false
+  ShowShareButtons = false
+  ShowRssButtonInSectionTermList = true
+  disableSpecial1stPost = true
+  comments = false
+  images = ["/og.png"]           # imagen por defecto al compartir enlaces
+
+  mainSections = ["blog"]
+
+  [params.footer]
+    text = "[Privacidad y aviso](/privacidad/)"
+
+  # Favicons (en static/)
+  [params.assets]
+    favicon = "/favicon.ico"
+    favicon16x16 = "/favicon-16x16.png"
+    favicon32x32 = "/favicon-32x32.png"
+    apple_touch_icon = "/apple-touch-icon.png"
+    safari_pinned_tab = "/safari-pinned-tab.svg"
+    theme_color = "#121212"
+    msapplication_TileColor = "#121212"
+    disableHLJS = true           # el resaltado lo hace Hugo (Chroma), no JS
+
+  # ---- La portada: esto es lo que sustituye a Carrd ----
+  [params.profileMode]
+    enabled = true
+    title = "José Juan Miret Conejero"
+    subtitle = "Especialista en SOC y SIEM, con más de una década en ciberseguridad. Aquí encontrarás artículos sobre seguridad, proyectos personales y lo que rompo de vez en cuando en mi homelab."
+    imageUrl = "/jjmiret.jpg"     # pon tu foto en static/perfil.jpg
+    imageWidth = 140
+    imageHeight = 140
+    imageTitle = "Jose Miret"
+
+    [[params.profileMode.buttons]]
+      name = "Blog"
+      url = "blog"
+
+    [[params.profileMode.buttons]]
+      name = "Proyectos"
+      url = "proyectos"
+
+    [[params.profileMode.buttons]]
+      name = "Currículum"
+      url = "curriculum"
+
+  # ---- Iconos sociales de la portada (los "profesionales") ----
+  # El `name` debe existir en themes/PaperMod/layouts/_partials/svg.html
+  # (o en layouts/_partials/iconos.html para los propios).
+  [[params.socialIcons]]
+    name = "email"
+    title = "Correo"
+    url = "mailto:hola@jjmiret.eu"
+
+  [[params.socialIcons]]
+    name = "mastodon"
+    url = "https://masto.es/@jjmiret"
+
+  [[params.socialIcons]]
+    name = "linkedin"
+    url = "https://www.linkedin.com/in/jjmiret"
+
+  [[params.socialIcons]]
+    name = "github"
+    url = "https://github.com/jjmiret"
+
+  [[params.socialIcons]]
+    name = "rss"
+    url = "index.xml"
+
+  # ---- Iconos que solo salen en "Sobre mí" (shortcode {{< iconos >}}) ----
+  [[params.socialIconsExtra]]
+    name = "mastodon"
+    url = "https://masto.es/@jjmiret"
+
+  [[params.socialIconsExtra]]
+    name = "pixelfed"
+    url = "https://pixelfed.social/jjmiret"
+
+  [[params.socialIconsExtra]]
+    name = "steam"
+    url = "https://steamcommunity.com/id/jjmiret"
+
+  [[params.socialIconsExtra]]
+    name = "amazon-music"
+    title = "Amazon Music"
+    url = "https://music.amazon.es/profiles/mgrly6dratmqwltpbyqgz7u4cq"
+
+  [[params.socialIconsExtra]]
+    name = "trakt"
+    title = "Trakt"
+    url = "https://trakt.tv/users/jjmiret"
+
+# ---------------------------------------------------------------
+# Menú de navegación
+# ---------------------------------------------------------------
+[menu]
+  [[menu.main]]
+    identifier = "blog"
+    name = "Blog"
+    url = "/blog/"
+    weight = 10
+
+  [[menu.main]]
+    identifier = "proyectos"
+    name = "Proyectos"
+    url = "/proyectos/"
+    weight = 20
+
+  [[menu.main]]
+    identifier = "curriculum"
+    name = "Currículum"
+    url = "/curriculum/"
+    weight = 30
+
+  [[menu.main]]
+    identifier = "sobre-mi"
+    name = "Sobre mí"
+    url = "/sobre-mi/"
+    weight = 40
+
+  [[menu.main]]
+    identifier = "buscar"
+    name = "Buscar"
+    url = "/buscar/"
+    weight = 50

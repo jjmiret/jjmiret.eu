@@ -1,0 +1,72 @@
+name: Deploy Hugo
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Por defecto, solo lectura. Cada job pide lo mínimo que necesita.
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      pages: read
+    env:
+      # Al subir de versión, actualiza también el hash: sale de
+      # hugo_<versión>_checksums.txt en la página de la release.
+      HUGO_VERSION: 0.168.0
+      HUGO_SHA256: b7cd5087c39bf5584e40180bd04fab0c6fb19f2913cd63121da8663e112a08db
+    steps:
+      # Las acciones van fijadas por SHA (el comentario indica la versión).
+      # Dependabot las mantiene al día.
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - name: Comprobar que no quedan datos de ejemplo
+        run: |
+          if grep -rnE 'USUARIO|EJEMPLO\.COM' hugo.toml layouts/; then
+            echo "::error::Quedan enlaces de ejemplo (USUARIO / EJEMPLO.COM). Sustitúyelos o bórralos antes de publicar."
+            exit 1
+          fi
+
+      - name: Instalar Hugo extended (verificando el hash)
+        run: |
+          curl -fsSL -o hugo.deb "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          echo "${HUGO_SHA256}  hugo.deb" | sha256sum --check --strict
+          sudo dpkg -i hugo.deb
+
+      - id: pages
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
+
+      - name: Construir el sitio
+        env:
+          BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: hugo --minify --environment production --baseURL "${BASE_URL}/"
+
+      - uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
+        with:
+          path: ./public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      pages: write      # publicar en Pages
+      id-token: write   # demostrar que el despliegue sale de este workflow
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1

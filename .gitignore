@@ -1,0 +1,17 @@
+public/
+resources/
+.hugo_build.lock
+.DS_Store
+node_modules/
+
+# Que nunca se suba nada sensible por accidente
+.env
+.env.*
+*.pem
+*.key
+*.p12
+*.log
+
+# Basura de Windows
+Thumbs.db
+desktop.ini
